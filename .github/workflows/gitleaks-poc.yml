@@ -40,7 +40,7 @@ jobs:
       # Install Gitleaks open-source CLI.
       - name: Install Gitleaks
         run: |
-          go install github.com/gitleaks/gitleaks/v8@latest
+          go install github.com/zricethezav/gitleaks/v8@latest
           echo "$HOME/go/bin" >> "$GITHUB_PATH"
 
       # Check installed Gitleaks version.

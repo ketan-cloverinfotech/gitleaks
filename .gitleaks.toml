@@ -1,0 +1,15 @@
+# .gitleaks.toml
+# Gitleaks POC config for React Native / JavaScript / TypeScript repositories.
+# This keeps default Gitleaks rules and adds one safe fake-secret rule for demo.
+
+title = "React Native Gitleaks POC Config"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "poc-hardcoded-secret"
+description = "Detect POC hardcoded secrets"
+regex = '''(?i)(poc_secret|poc_api_key|demo_secret|secret_key)\s*[:=]\s*["']?[a-zA-Z0-9_\-]{12,}["']?'''
+secretGroup = 0
+tags = ["poc", "secret"]

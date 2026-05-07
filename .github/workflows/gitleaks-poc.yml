@@ -1,0 +1,61 @@
+# .github/workflows/gitleaks-poc.yml
+# Runs Gitleaks secret scanning when a pull request is raised.
+
+name: Gitleaks Secret Scan POC
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+  push:
+    branches:
+      - main
+      - master
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gitleaks:
+    name: Run Gitleaks Secret Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout full git history so Gitleaks can scan commits also.
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Install latest stable Go so Gitleaks CLI can be installed directly.
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      # Install Gitleaks open-source CLI.
+      - name: Install Gitleaks
+        run: |
+          go install github.com/gitleaks/gitleaks/v8@latest
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+
+      # Check installed Gitleaks version.
+      - name: Check Gitleaks version
+        run: |
+          gitleaks version
+
+      # Run Gitleaks scan.
+      # --exit-code 1 fails the workflow when a secret is found.
+      # --redact hides secret value in workflow logs.
+      - name: Run Gitleaks
+        run: |
+          gitleaks detect \
+            --source . \
+            --config .gitleaks.toml \
+            --redact \
+            --verbose \
+            --exit-code 1

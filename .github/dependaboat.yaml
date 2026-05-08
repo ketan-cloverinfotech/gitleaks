@@ -1,0 +1,60 @@
+# .github/dependabot.yml
+# Dependabot POC for non-containerized React Native repo.
+# It checks npm packages, Android Gradle dependencies, and GitHub Actions versions.
+
+version: 2
+
+updates:
+  # React Native JavaScript / TypeScript dependencies.
+  # Checks package.json, package-lock.json, yarn.lock, and pnpm-lock.yaml in repo root.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "dependabot"
+      - "npm"
+      - "poc"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+
+  # React Native Android native dependencies.
+  # Checks Gradle files under /android.
+  - package-ecosystem: "gradle"
+    directory: "/android"
+    schedule:
+      interval: "daily"
+      time: "09:30"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "dependabot"
+      - "android"
+      - "poc"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+
+  # GitHub Actions workflow dependency updates.
+  # Checks action versions used in .github/workflows/*.yml.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "10:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "dependabot"
+      - "github-actions"
+      - "poc"
+    commit-message:
+      prefix: "deps"
+      include: "scope"

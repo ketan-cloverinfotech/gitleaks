@@ -33,7 +33,7 @@ jobs:
 
       # Install latest stable Go so Gitleaks CLI can be installed directly.
       - name: Setup Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: "stable"
 

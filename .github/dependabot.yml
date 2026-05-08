@@ -26,7 +26,7 @@ updates:
   # React Native Android native dependencies.
   # Checks Gradle files under /android.
   - package-ecosystem: "gradle"
-    directory: "/android"
+    directory: "/"
     schedule:
       interval: "daily"
       time: "09:30"

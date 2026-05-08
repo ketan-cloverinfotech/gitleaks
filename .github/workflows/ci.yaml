@@ -1,0 +1,34 @@
+name: Sample React Native CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test sample app
+    runs-on: ubuntu-latest
+
+    steps:
+      # Old version intentionally used for Dependabot POC.
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Old version intentionally used for Dependabot POC.
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Lightweight POC check.
+      - name: Run sample check
+        run: |
+          node --version
+          echo "Dependabot POC workflow is running"
